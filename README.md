@@ -1,4 +1,5 @@
-Keylogger Project
+Keylogger Project=>
+Here I had uploaded the program for keylogger which are 2 pdf's and uploaded output as a screenshot.
 A keylogger is a Program or tool which is used to capture keystrokes.As well as I had used encrypted data Exfilteration.
 Exfiltration is a process of transfer of sensitive information from a computer system or network an external destination. 
 Exfiltration is actually just same as data theft where attackers aim to extract values data for malicious purposes.
@@ -63,4 +64,34 @@ Listener=keyboard. Listener(on_press=on_press)
 listener.start()
 listener.join()
 def on_press(key):Defines the callback function that is triggered every time a key is pressed.The key parameter represent the key that was pressed.
+try: Starts a try expect block to handle different types of key presses.
+→Write- encrypted-log (str key char)):Tries to get the character representation of the key(e.g..'a',b','1') and passes it the write_encrypted_log function.This works for most alphanumeric keys.
+→ except Attribute Error: This Block is executed if key.char fails, which happen sfor special keys like shift, ctrl or space.
+->write_encrypted_log(str(key.char)):tries to get the character representation of the key(e.g..,'a','b,'1')and passes it the write_encrypted_log function.This works for most alphanumeric keys.
+→ if key == KILL-switch: checks if the pressed key is the delignated kill switch (sscape)
+→ return False: If the kill switch is pressed this line returns false, which signals the pynput listener to stop.
+→listener = keyboard.Listener(on_press=on_press) creates an instance of the keyboard.listener class. It configured to call the on_press function wheneler a key is pressed.
+->listener.start() :- starts the listener in a seperate thread, allowing to continue the main program running.
+→ listener.join():starts for the listener thread to finish. This keeps the program running and listening for key presses untill the return False statement is triggered by the kill switch.
 
+This was the code for encrypting and capturing key strokes storing in a file.
+Now I will write the code for reading,decrypting and printing the keystrokes that had been captured,encrypted and stored in a file.
+Here the encryption used for encrypting and decrypting is symmetric Encryption which uses a single for this operation.
+Algorithim:-
+Fernet Key -The scripts leads a symmetric encryption key from a file named encryption_key.key and uses it to instantiate the Fernet object.
+Reading Encrypted Data - It reads all lines in Keys.txt, each presumed to be individual encrypted log line.
+Decryption Process: Each line is stripped of whitespace (to remove newline character) and then decrypted using Fernet.If decryption succeeds, the original plaintext log is printed with time stamped; otherwise an error message occurs.
+From cryptography.fernet import Fernet → This line imports the fernet class from the cryptography.fernet module.Fernet is a symmetric encryption scheme that provides a high level API for encrypting and decrypting data.symmetric means the same key is used for both encryption and decryption.
+Note:
+Here we have encoded and decoded the text before encrypting because fernet encryption algorithim operate on raw bytes, not on text strings. The byte string was then passed to the fernet. decrypt() and encrypt method. It was encoded and decoded into Bytes before encrypting by UTF-8 method.
+
+Code & explaination:
+
+->from cryptography.Fernet import Fernet=>This line imports class from the cryptography library for symmetric encryption and decryption.
+->with open('encryption_key.key','rb') as f:key=f.read()=>This block opens the encryption_key.key file in read binary(rb) mode and reads the encryption key.
+->fernet=Fernet(key)=>This line creates a Fernet object using the loaded key.
+->with open ('keys.txt','rb') as f: encrypted lines=f.readlines(): This block opens keys.txt file in read-binary(rb) mode.
+->for enc_line=enc_line.strip()=>The strip() method is used to remove any leading or traiing whitespaces, including the newline character (\n) that are often at the end of lines when reading as a byte.
+=>decrypted_log=decrypted_bytes.decode()=>Since the output of decrypt() is a byte string, you need to convert it to a human-readable string.
+=>print(decrypted_log)=>For printing decrypted log data.
+=>except Exception as e:printf("Failed to decrypt a line:{e}")
