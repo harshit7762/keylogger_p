@@ -1,5 +1,5 @@
 Keylogger Project=>
-Here I had uploaded the program for keylogger which are 2 pdf's and uploaded output as a screenshot.
+Here I had uploaded the program for keylogger which are 2 pdf's and uploaded output as a screenshot(3 photos uploaded in PNG).
 A keylogger is a Program or tool which is used to capture keystrokes.As well as I had used encrypted data Exfilteration.
 Exfiltration is a process of transfer of sensitive information from a computer system or network an external destination. 
 Exfiltration is actually just same as data theft where attackers aim to extract values data for malicious purposes.
